@@ -1,5 +1,5 @@
 {
-  "name": "exercise-01",
+  "name": "web-assignment-abin733",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,5 +8,26 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2"
-  }
+  },
+  "description": "Web Assignment for COMPSCI719",
+  "main": "app.js.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abin733/web-assignment-abin733.git"
+  },
+  "keywords": [
+    "js",
+    "ajax",
+    "handlebars",
+    "json",
+    "html",
+    "css"
+  ],
+  "author": "abin733",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/abin733/web-assignment-abin733/issues"
+  },
+  "homepage": "https://github.com/abin733/web-assignment-abin733#readme"
 }
