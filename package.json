@@ -6,12 +6,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-handlebars": "^5.3.2"
   },
   "description": "Web Assignment for COMPSCI719",
   "main": "app.js.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abin733/web-assignment-abin733.git"
