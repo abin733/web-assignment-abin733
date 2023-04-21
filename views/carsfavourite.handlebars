@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cars by Year Range</title>
+    <link rel="stylesheet" href="../site.css">
+    <script src="../table.js"></script>
+    
+</head>
+
+<body>
+    <div class="container">
+
+        
+        <h1>All Cars</h1>
+        <h2>Favourites</h2>
+        <button onclick="updateFavouritesTable()">Update</button>
+        <table id="favourites-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Car Make</th>
+                    <th>Car Model</th>
+                    <th>Car Year</th>
+                    <th>Country</th>
+                    <th>Price</th>
+                    <th>Odometer</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br>
+        <p>COMPSCI719 Mid-Semester Web Assignment - ABIN733</p>
+        <br>
+        
+    </div>
+<script>
+function updateFavouritesTable() {
+    const favouritesTable = document.querySelector("#favourites-table tbody");
+    favouritesTable.innerHTML = "";
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (localStorage.getItem(key) === "true") {
+            const carId = JSON.parse(key);
+            fetch(`/cars/${carId}`)
+                .then((response) => response.json())
+                .then((car) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${car.id}</td>
+                        <td>${car.carMake}</td>
+                        <td>${car.carModel}</td>
+                        <td>${car.carYear}</td>
+                        <td>${car.country}</td>
+                        <td>${car.price}</td>
+                        <td>${car.odometer}</td>
+                    `;
+                    favouritesTable.appendChild(row);
+                });
+        }
+    }
+}
+
+
+</script>
+</body>
+</html>

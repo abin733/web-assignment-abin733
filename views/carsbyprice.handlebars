@@ -9,29 +9,30 @@
 </head>
 
 <body>
-    <div class = "tablediv">
-    <h1>Cars by Price</h1>
-        <table id="myTable">
-                <thead>
+    <div class="container">
+        <h1>Cars by Price Range</h1>
+            <table id="myTable">
+                    <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Car Make</th>
+                        <th onclick="sortTable(1)">Car Model</th>
+                        <th onclick="sortTable(2)">Car Price</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {{#each cars}}
                 <tr>
-                    <th onclick="sortTable(0)">Car Make</th>
-                    <th onclick="sortTable(1)">Car Model</th>
-                    <th onclick="sortTable(2)">Car Price</th>
+                    <td>{{this.carMake}}</td>
+                    <td>{{this.carModel}}</td>
+                    <td>{{this.price}}</td>
                 </tr>
-            </thead>
-        <tbody>
-            {{#each cars}}
-            <tr>
-                <td>{{this.carMake}}</td>
-                <td>{{this.carModel}}</td>
-                <td>{{this.carPrice}}</td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <br>
-    <p>COMPSCI719 Mid-Semester Web Assignment - ABIN733</p>
-    <br>
+                {{/each}}
+            </tbody>
+        </table>
+        <br>
+        <p>COMPSCI719 Mid-Semester Web Assignment - ABIN733</p>
+        <br>
+        
     </div>
 </body>
 </html>
