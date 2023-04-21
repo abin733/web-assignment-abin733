@@ -28,6 +28,7 @@ table {
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
+
 th,
 td {
   padding: 15px;
@@ -57,15 +58,6 @@ tbody td:hover:before {
   z-index: -1;
 }
 
-.small-column {
-  grid-column: 1 / 2;
-}
-
-.big-column {
-  grid-column: 2 / 3;
-}
-
-@import "./utils.css";
 /* Fonts, misc */
 
 /*****************************************************************/
@@ -130,11 +122,17 @@ body {
 .container {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 3fr;
-  grid-gap: 1rem;
-  border: 1px solid black;
+  grid-gap: 15rem;
   margin: auto auto;
 }
 
+.small-column {
+  grid-column: 1 / 2;
+}
+
+.big-column {
+  grid-column: 2 / 3;
+}
 
 /*****************************************************************/
 

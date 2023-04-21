@@ -14,20 +14,8 @@
         <div class="small-column">
         <h1>CarQuery</h1>
         <h2>Favorites</h2>
-
-        <h2>ID</h2>
-        <form action="./cars/id">
-            <label for="id">Car ID</label>
-            <select name="carId" id="carId">
-                {{#each carId}}
-                <option value={{this}}>{{this}}</option>
-                {{/each}}
-            </select>
-            <input type="submit" value="Submit" />
-        </form>
-        <br>
         <h2>Make</h2>
-        <form action="./cars/carMake">
+        <form action="/summary/carMakeaverage">
             <label for="carMake">Car Make</label>
             <select name="carMake" id="carMake">
                 {{#each carMake}}
@@ -37,20 +25,9 @@
             <br>
             <input type="submit" value="Submit" />
         </form>
-        <br>
-        <h2>Model</h2>
-        <form action="./cars/carModel">
-            <label for="carModel">Car Model</label>
-            <select name="carModel" id="carModel">
-                {{#each carModel}}
-                <option value={{this}}>{{this}}</option>
-                {{/each}}
-            </select>
-            <input type="submit" value="Submit" />
-        </form>
-        <br>
+        <br
         <h2>Years</h2>
-        <form action="./cars/years" method="GET">
+        <form action="/summary/yearsaverage" method="GET">
             <label for="lowerYear">From (Year)</label><br>
             <input type="number" id="lowerYear" name="lower"><br>
             <label for="upperYear">To (Year)</label><br>
@@ -59,41 +36,10 @@
             <input type="submit" value="Submit">
         </form>
         <br>
-        <h2>Country</h2>
-        <form action="./cars/country">
-            <label for="country">Country</label>
-            <select name="country" id="country">
-                {{#each countries}}
-                <option value={{this}}>{{this}}</option>
-                {{/each}}
-            </select>
-            <br>
-            <input type="submit" value="Submit" />
-        </form>
-        <br>
-        <h2>Prices</h2>
-        <form action="./cars/prices" method="GET">
-            <label for="lowerPrice">From (Price)</label><br>
-            <input type="number" id="lowerPrice" name="lower"><br>
-            <label for="upperPrice">To (Price)</label><br>
-            <input type="number" id="upperPrice" name="upper"><br>
-            <br>
-            <input type="submit" value="Submit">
-        </form>
-        <br>
-        <h2>Odometers</h2>
-        <form action="./cars/odometers" method="GET">
-            <label for="lowerodometer">From (odometer)</label><br>
-            <input type="number" id="lowerodometer" name="lower"><br>
-            <label for="upperodometer">To (odometer)</label><br>
-            <input type="number" id="upperodometer" name="upper"><br>
-            <br>
-            <input type="submit" value="Submit">
-        </form>
-        <br>
         </div>
         <div class = "big-column">
-        <h1>All Cars</h1>
+        <h1>Summary</h1>
+        <h3>Average Price is $ {{avgprice}}</h3>
         <table id="myTable">
             <thead>
                 <tr>

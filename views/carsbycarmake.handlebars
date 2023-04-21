@@ -21,6 +21,7 @@
                     <th onclick="sortTable(4)">Country</th>
                     <th onclick="sortTable(5)">Price</th>
                     <th onclick="sortTable(6)">Odometer</th>
+                    <th onclick="sortTable(7)">Favourite</th>
                 </tr>
             </thead>
         <tbody>
@@ -33,6 +34,7 @@
                 <td>{{this.country}}</td>
                 <td>{{this.price}}</td>
                 <td>{{this.odometer}}</td>
+                <td><input type="checkbox" name="favourite" value={{this.id}}></td>
             </tr>
             {{/each}}
         </tbody>
@@ -42,4 +44,27 @@
     <br>
     </div>
 </body>
+<script>
+    // Store the ID of the car in local storage when the checkbox is clicked
+    const checkboxes = document.querySelectorAll('input[name="favourite"]');
+
+    checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", function() {
+        if (checkbox.checked) {
+            localStorage.setItem(checkbox.value, "true");
+            console.log(`Car with ID ${checkbox.value} is checked.`);
+        } else {
+            localStorage.removeItem(checkbox.value);
+            console.log(`Car with ID ${checkbox.value} is unchecked.`);
+        }
+    });
+    });
+
+    // Check if the car ID is already favourited and check the box if it is
+    checkboxes.forEach((checkbox) => {
+    if (localStorage.getItem(checkbox.value) === "true") {
+        checkbox.checked = true;
+    }
+    });
+</script>
 </html>

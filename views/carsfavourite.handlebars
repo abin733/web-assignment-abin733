@@ -6,16 +6,31 @@
     <title>Cars by Year Range</title>
     <link rel="stylesheet" href="../site.css">
     <script src="../table.js"></script>
-    
+    <script>
+        function removeFavourites(){
+            // Store the ID of the car in local storage when the checkbox is clicked
+            const checkboxes = document.querySelectorAll('input[name="favourite"]');
+
+            checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("click", function() {
+                if (checkbox.checked) {
+                    localStorage.removeItem(checkbox.value, "true");
+                    console.log(`Car with ID ${checkbox.value} is removed.`);
+                } 
+            });
+        });
+    }
+
+    </script>
 </head>
 
 <body>
     <div class="container">
-
-        
-        <h1>All Cars</h1>
-        <h2>Favourites</h2>
+        <div class="small-column">      
+        <h1>Favourites</h1>
         <button onclick="updateFavouritesTable()">Update</button>
+        </div>
+        <div class="big-column">
         <table id="favourites-table">
             <thead>
                 <tr>
@@ -26,6 +41,7 @@
                     <th>Country</th>
                     <th>Price</th>
                     <th>Odometer</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,36 +50,35 @@
         <br>
         <p>COMPSCI719 Mid-Semester Web Assignment - ABIN733</p>
         <br>
-        
     </div>
+</div>
 <script>
-function updateFavouritesTable() {
-    const favouritesTable = document.querySelector("#favourites-table tbody");
-    favouritesTable.innerHTML = "";
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (localStorage.getItem(key) === "true") {
-            const carId = JSON.parse(key);
-            fetch(`/cars/${carId}`)
-                .then((response) => response.json())
-                .then((car) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${car.id}</td>
-                        <td>${car.carMake}</td>
-                        <td>${car.carModel}</td>
-                        <td>${car.carYear}</td>
-                        <td>${car.country}</td>
-                        <td>${car.price}</td>
-                        <td>${car.odometer}</td>
-                    `;
-                    favouritesTable.appendChild(row);
-                });
+    function updateFavouritesTable() {
+        const favouritesTable = document.querySelector("#favourites-table tbody");
+        favouritesTable.innerHTML = "";
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (localStorage.getItem(key) === "true") {
+                const carId = JSON.parse(key);
+                fetch(`/cars/${carId}`)
+                    .then((response) => response.json())
+                    .then((car) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${car.id}</td>
+                            <td>${car.carMake}</td>
+                            <td>${car.carModel}</td>
+                            <td>${car.carYear}</td>
+                            <td>${car.country}</td>
+                            <td>${car.price}</td>
+                            <td>${car.odometer}</td>
+                            <td><input type="checkbox" name="favourite" onclick="removeFavourites()" value=${car.id}></td>
+                        `;
+                        favouritesTable.appendChild(row);
+                    });
+            }
         }
     }
-}
-
-
 </script>
 </body>
 </html>

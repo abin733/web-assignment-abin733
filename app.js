@@ -27,17 +27,22 @@ app.get("/", function (req, res) {
     const uniqueIds = getUniqueIds();
     const uniqueCarMakes = getUniqueCarMakes().sort();
     const uniqueCarModels = getUniqueCarModels().sort();
-    res.render("home", { cars: carData, countries: uniqueCountries , carId:uniqueIds, carModel:uniqueCarModels, carMake:uniqueCarMakes,});
+    res.render("home", { cars: carData, countries: uniqueCountries , carId:uniqueIds, carModel:uniqueCarModels, carMake:uniqueCarMakes});
 
 });
 
-app.get("/about", function (req, res) {
+app.get("/favourites", function (req, res) {
     const uniqueCountries = getUniqueCountries().sort();
     const uniqueIds = getUniqueIds();
     const uniqueCarMakes = getUniqueCarMakes().sort();
     const uniqueCarModels = getUniqueCarModels().sort();
-    res.render("carsfavourite", { cars: carData, countries: uniqueCountries , carId:uniqueIds, carModel:uniqueCarModels, carMake:uniqueCarMakes,});
+    res.render("carsfavourite", { cars: carData, countries: uniqueCountries , carId:uniqueIds, carModel:uniqueCarModels, carMake:uniqueCarMakes});
+});
 
+app.get("/summary", function (req, res) {
+    const uniqueCarMakes = getUniqueCarMakes().sort();
+
+    res.render("carssummary",{cars:carData,carMake:uniqueCarMakes});
 });
 
 app.get("/cars/id", function (req, res) {
@@ -68,6 +73,22 @@ app.get("/cars/carMake", function (req, res) {
     //TODO: res.render & create Handlebars file
     res.render("carsbycarmake");
 
+});
+
+app.get("/summary/carMakeaverage", function (req, res) {
+    console.log("Request received to 'cars/carMake' ");
+    console.log(JSON.stringify(req.query));
+
+    const carMake = req.query.carMake;
+
+    //TODO: create function to get cars by range of years
+    const carsArray = getCarsByCarMake(carMake);
+    res.locals.cars = carsArray;
+    const avgPrice = getCarMakeAverageByPrices(carMake);
+    res.locals.avgprice = avgPrice.toFixed(2);
+    //TODO: res.render & create Handlebars file
+    const uniqueCarMakes = getUniqueCarMakes().sort();
+    res.render("carssummary",{carMake:uniqueCarMakes});
 });
 
 app.get("/cars/carModel", function (req, res) {
@@ -130,6 +151,25 @@ app.get("/cars/prices", function(req,res){
 });
 
 // When a GET request is made to "/" (i.e. the root path), render the
+// "/cars/prices" view. This can be found in /views/carsbyprice.handlebars
+app.get("/summary/yearsaverage", function(req,res){
+    console.log("Request received to 'cars/years' ");
+    console.log(JSON.stringify(req.query));
+
+    const lowerYear = req.query.lower;
+    const upperYear = req.query.upper;
+
+    console.log(`lower: ${lowerYear} upper: ${upperYear}`);
+    //TODO: create function to get cars by range of years
+    const carsArray = getCarsByYears(lowerYear,upperYear);
+    res.locals.cars = carsArray;
+    const avgPrice = getCarsYearsAverageByPrices(lowerYear,upperYear);
+    res.locals.avgprice = avgPrice.toFixed(2);
+    //TODO: res.render & create Handlebars file
+    res.render("carssummary");
+});
+
+// When a GET request is made to "/" (i.e. the root path), render the
 // "/cars/odometers" view. This can be found in /views/carsbyodometer.handlebars
 app.get("/cars/odometers", function(req,res){
     console.log("Request received to 'cars/odometers' ");
@@ -154,12 +194,17 @@ app.listen(port, function () {
     console.log(`Example app listening on port ${port}!`);
 });
 
-// An example function that gets all cars from a given country
+function getUniqueCountries() {
+    const countries = carData.map((car) => encodeURIComponent(car.country));
+    return [...new Set(countries)];
+}
+
 function getCarsByCountry(countryName){
     if (!countryName) {
         return carData;
     }
-    const carsFromCountry = carData.filter((car) => car.country === countryName);
+    const decodedCountryName = decodeURIComponent(countryName);
+    const carsFromCountry = carData.filter((car) => car.country === decodedCountryName);
     return carsFromCountry;
 }
 
@@ -180,21 +225,25 @@ function getCarsById(carId){
     return carsId;
 }
 
-function getCarsByCarMake(carMake){
+function getCarsByCarMake(carMake) {
+    const decodedCarMake = decodeURIComponent(carMake);
+    return carData.filter((car) => car.carMake === decodedCarMake);
+}
+
+
+function getCarMakeAverageByPrices(carMake){
     console.log("get cars by carMake:" + carMake)
-    let carMakes = [];
-    if (!carMake) {
-        return carData;
-    }
+    let totalPrice = 0;
+    let totalCars = 0;
     for (let i = 0; i < carData.length; i++) {
         if(carData[i].carMake == carMake){
-            console.log("Matched");
-            carMakes.push(carData[i]);
+            totalPrice += carData[i].price;
+            totalCars++;
         }
 
     }
-    console.log(JSON.stringify(carMake))
-    return carMakes;
+    averagePrice = totalPrice/totalCars;
+    return averagePrice;
 }
 
 function getCarsByCarModel(carModel){
@@ -228,6 +277,19 @@ function getCarsByPrices(lower,upper){
     return filteredResults;
 }
 
+function getCarsYearsAverageByPrices(lower,upper){
+    const filteredResults = carData.filter(function (car) {
+        return car.carYear >= lower && car.carYear <= upper;       
+    });
+
+    let totalPrice = 0;
+    for (let i = 0; i < filteredResults.length; i++) {
+        totalPrice += filteredResults[i].price;
+    }
+    let averagePrice = totalPrice/filteredResults.length;
+    return averagePrice;
+}
+
 function getCarsByodometers(lower,upper){
     const filteredResults = carData.filter(function (car) {
         return car.odometer >= lower && car.odometer <= upper;       
@@ -244,17 +306,15 @@ function getUniqueIds() {
 
 function getUniqueCarMakes() {
     const carsMake = carData.map((car) => car.carMake);
-    return [...new Set(carsMake)];
+    const uniqueCarsMake = [...new Set(carsMake)];
+    return uniqueCarsMake.map((carMake) => encodeURIComponent(carMake));
 }
+
+
 
 function getUniqueCarModels() {
     const carsModel = carData.map((car) => car.carModel);
     return [...new Set(carsModel)];
-}
-
-function getUniqueCountries() {
-    const countries = carData.map((car) => car.country);
-    return [...new Set(countries)];
 }
 
 // Function to get cars by lower and upper years...
