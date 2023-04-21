@@ -29,6 +29,8 @@ app.get("/", function (req, res) {
 
 });
 
+// When a GET request is made to "/" (i.e. the root path), render the
+// "/cars/years" view. This can be found in /views/carsbyyear.handlebars
 app.get("/cars/years", function(req,res){
     console.log("Request received to 'cars/years' ");
     console.log(JSON.stringify(req.query));

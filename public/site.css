@@ -4,18 +4,26 @@ body {
 }
 body {
   margin: 0;
-  background: -webkit-linear-gradient(45deg, #49a09d, #5f2c82);
+  background: -webkit-linear-gradient(45deg, #49a09d, hsl(276, 49%, 34%));
   background: linear-gradient(45deg, #49a09d, #5f2c82);
   font-family: sans-serif;
   font-weight: 100;
 }
 .container {
-  position: absolute;
+  position:absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
+
+.tablediv {
+  position:absolute;
+  top:15%;
+  left:15%;
+  right:15%;
+}
+
 table {
   width: 800px;
   border-collapse: collapse;
@@ -49,10 +57,4 @@ tbody td:hover:before {
   bottom: -9999px;
   background-color: rgba(255, 255, 255, 0.2);
   z-index: -1;
-}
-form {
-    border: black solid 1px;
-}
-div {
-    border: black solid 10px;
 }

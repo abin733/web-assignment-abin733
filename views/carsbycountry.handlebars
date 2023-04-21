@@ -10,13 +10,13 @@
 
 <body>
     <div class="container">
-    <h1>Cars by ID</h1>
+    <h1>Cars by Country</h1>
         <table id="myTable">
                 <thead>
                 <tr>
                     <th onclick="sortTable(0)">Car Make</th>
                     <th onclick="sortTable(1)">Car Model</th>
-                    <th onclick="sortTable(2)">Car ID</th>
+                    <th onclick="sortTable(2)">Country</th>
                 </tr>
             </thead>
         <tbody>
@@ -24,7 +24,7 @@
             <tr>
                 <td>{{this.carMake}}</td>
                 <td>{{this.carModel}}</td>
-                <td>{{this.id}}</td>
+                <td>{{this.country}}</td>
             </tr>
             {{/each}}
         </tbody>
