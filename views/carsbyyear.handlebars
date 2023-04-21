@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cars by Year Range</title>
+    <link rel="stylesheet" href="../site.css">
+    <script src="../table.js"></script>
+</head>
+
+<body>
+    <h1>Cars by Year Range</h1>
+        <table id="myTable">
+                <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Car Make</th>
+                    <th onclick="sortTable(1)">Car Model</th>
+                    <th onclick="sortTable(2)">Car Year</th>
+                </tr>
+            </thead>
+        <tbody>
+            {{#each cars}}
+            <tr>
+                <td>{{this.carMake}}</td>
+                <td>{{this.carModel}}</td>
+                <td>{{this.carYear}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>

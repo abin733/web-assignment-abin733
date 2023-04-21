@@ -3,14 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Exercise One</title>
+    <title>COMPSCI719 Mid-Semester Web Assignment</title>
     <link rel="stylesheet" href="./site.css">
+    <script src="./home.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Handlebars</h1>
-
+        <h1>COMPSCI719 Mid-Semester Web Assignment</h1>
+        <h2>Get cars from range of years</h2>
+        <form action="./cars/years" method="GET">
+            <label for="lowerYear">From (Year)</label><br>
+            <input type="number" id="lowerYear" name="lower"><br>
+            <label for="upperYear">To (Year)</label><br>
+            <input type="number" id="upperYear" name="upper"><br>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        <h2>Get cars by country</h2>
+        <form action="./cars/country">
+            <label for="country">Country</label>
+            <select name="country" id="country">
+                {{#each countries}}
+                <option value={{this}}>{{this}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Submit" />
+        </form>
+        <br>
+         <h2>Get car by ID</h2>
+        <form action="./cars/id">
+            <label for="id">Car ID</label>
+            <select name="carId" id="carId">
+                {{#each carId}}
+                <option value={{this}}>{{this}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Submit" />
+        </form>
     </div>
 </body>
 
