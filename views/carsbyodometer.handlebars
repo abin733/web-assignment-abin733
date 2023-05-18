@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cars by Year Range</title>
+    <link rel="stylesheet" href="../site.css">
+    <script src="../table.js"></script>
+</head>
+
+<body>
+    <div class="container">
+    <h1>Cars by Odometer</h1>
+        <table id="myTable">
+                <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Car Make</th>
+                    <th onclick="sortTable(1)">Car Model</th>
+                    <th onclick="sortTable(2)">Odometer</th>
+                    <th onclick="sortTable(3)">Favourite</th>
+                </tr>
+            </thead>
+        <tbody>
+            {{#each cars}}
+            <tr>
+                <td>{{this.carMake}}</td>
+                <td>{{this.carModel}}</td>
+                <td>{{this.odometer}}</td>
+                <td><input type="checkbox" name="favourite" value={{this.id}}></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <br>
+    <p>COMPSCI719 Mid-Semester Web Assignment - ABIN733</p>
+    <br>
+    </div>
+    <script>
+    // Store the ID of the car in local storage when the checkbox is clicked
+    const checkboxes = document.querySelectorAll('input[name="favourite"]');
+
+    checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", function() {
+        if (checkbox.checked) {
+            localStorage.setItem(checkbox.value, "true");
+            console.log(`Car with ID ${checkbox.value} is checked.`);
+        } else {
+            localStorage.removeItem(checkbox.value);
+            console.log(`Car with ID ${checkbox.value} is unchecked.`);
+        }
+    });
+    });
+
+    // Check if the car ID is already favourited and check the box if it is
+    checkboxes.forEach((checkbox) => {
+    if (localStorage.getItem(checkbox.value) === "true") {
+        checkbox.checked = true;
+    }
+    });
+    </script>
+</body>
+</html>

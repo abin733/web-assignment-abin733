@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cars by Year Range</title>
+    <link rel="stylesheet" href="../site.css">
+    <script src="../table.js"></script>
+    
+</head>
+
+<body>
+    <div class="container">
+        <div class="small-column">
+        <h1>CarQuery</h1>
+        <h2>Favorites</h2>
+        <h2>Make</h2>
+        <form action="/summary/carMakeaverage">
+            <label for="carMake">Car Make</label>
+            <select name="carMake" id="carMake">
+                {{#each carMake}}
+                <option value={{this}}>{{this}}</option>
+                {{/each}}
+            </select>
+            <br>
+            <input type="submit" value="Submit" />
+        </form>
+        <br
+        <h2>Years</h2>
+        <form action="/summary/yearsaverage" method="GET">
+            <label for="lowerYear">From (Year)</label><br>
+            <input type="number" id="lowerYear" name="lower"><br>
+            <label for="upperYear">To (Year)</label><br>
+            <input type="number" id="upperYear" name="upper"><br>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        </div>
+        <div class = "big-column">
+        <h1>Summary</h1>
+        <h3>Average Price is $ {{avgprice}}</h3>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">ID↑↓</th>
+                    <th onclick="sortTable(1)">Car Make↑↓</th>
+                    <th onclick="sortTable(2)">Car Model↑↓</th>
+                    <th onclick="sortTable(3)">Year↑↓</th>
+                    <th onclick="sortTable(4)">Country↑↓</th>
+                    <th onclick="sortTable(5)">Price↑↓</th>
+                    <th onclick="sortTable(6)">Odometer↑↓</th>
+                    <th>Favourite</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each cars}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.carMake}}</td>
+                    <td>{{this.carModel}}</td>
+                    <td>{{this.carYear}}</td>
+                    <td>{{this.country}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.odometer}}</td>
+                    <td><input type="checkbox" name="favourite" value={{this.id}}></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <br>
+        <p>COMPSCI719 Mid-Semester Web Assignment - ABIN733</p>
+        <br>
+        </div>
+    </div>
+<script>
+    // Store the ID of the car in local storage when the checkbox is clicked
+    const checkboxes = document.querySelectorAll('input[name="favourite"]');
+
+    checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", function() {
+        if (checkbox.checked) {
+            localStorage.setItem(checkbox.value, "true");
+            console.log(`Car with ID ${checkbox.value} is checked.`);
+        } else {
+            localStorage.removeItem(checkbox.value);
+            console.log(`Car with ID ${checkbox.value} is unchecked.`);
+        }
+    });
+    });
+
+    // Check if the car ID is already favourited and check the box if it is
+    checkboxes.forEach((checkbox) => {
+    if (localStorage.getItem(checkbox.value) === "true") {
+        checkbox.checked = true;
+    }
+    });
+</script>
+</body>
+</html>

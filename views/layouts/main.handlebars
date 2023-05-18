@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise One</title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <h1 class="nav-brand">My website</h1>
+        <a href="/" class="nav-button{{#if homePage}} active{{/if}}">Home</a>
+        <a href="/favourites" class="nav-button{{#if aboutPage}} active{{/if}}">Favourites</a>
+        <a href="/summary" class="nav-button{{#if aboutPage}} active{{/if}}">Summary</a>
+
+    </nav>
+    {{{body}}}
+</body>
+
+</html>
